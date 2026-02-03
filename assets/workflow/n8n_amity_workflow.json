@@ -1,0 +1,2127 @@
+{
+  "name": "Submission Ready V1",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "YOUR_BONAFIDE_TEMPLATE_ID",
+          "mode": "list",
+          "cachedResultName": "Bonafide Certificate",
+          "cachedResultUrl": "https://docs.google.com/document/d/YOUR_BONAFIDE_TEMPLATE_ID/edit?usp=drivesdk"
+        },
+        "name": "={{ 'Bonafide_' + $('Map Department to Course Name').item.json.studentName.replace(/\\s+/g, '_') + '_' + $('Map Department to Course Name').item.json.enrollmentNumber }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_DRIVE_FOLDER_ID",
+          "mode": "list",
+          "cachedResultName": "Sending Pages",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR_GOOGLE_DRIVE_FOLDER_ID"
+        },
+        "options": {}
+      },
+      "id": "d8f72b77-c6b5-47e6-b67f-d567f39ea493",
+      "name": "Duplicate Bonafide Template",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        544,
+        352
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.documentType }}",
+                    "rightValue": "Front Page",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "f68ec40a-6552-4e7b-8e6f-cde575c8e668"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Front Page Only"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.documentType }}",
+                    "rightValue": "Bona Fide",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "5ce2d740-9156-436a-94dc-50ced160a1ea"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Bonafide Only"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.documentType }}",
+                    "rightValue": "Both",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "20795ef4-5d70-4666-a417-4075ac22df9d"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Both"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "86f2213b-6cad-4793-b822-e33be0b7c52a",
+      "name": "Route by Selection",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "YOUR_BONAFIDE_TEMPLATE_ID",
+          "mode": "list",
+          "cachedResultName": "Bonafide Certificate",
+          "cachedResultUrl": "https://docs.google.com/document/d/YOUR_BONAFIDE_TEMPLATE_ID/edit?usp=drivesdk"
+        },
+        "name": "={{ 'Bonafide_' + $('Map Department to Course Name').item.json.studentName.replace(/\\s+/g, '_') + '_' + $('Map Department to Course Name').item.json.enrollmentNumber }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_DRIVE_FOLDER_ID",
+          "mode": "list",
+          "cachedResultName": "Sending Pages",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR_GOOGLE_DRIVE_FOLDER_ID"
+        },
+        "options": {
+          "copyRequiresWriterPermission": false
+        }
+      },
+      "id": "c74be044-147c-4812-9b09-c08e0c418af5",
+      "name": "Duplicate Bonafide Template (Both)",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        704,
+        656
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const replacements = [\n  { replaceText: '__Department_name__', replaceWith: $('Variable Mapping (Bonafide)').item.json.department_name },\n  { replaceText: '__Batch__', replaceWith: $('Variable Mapping (Bonafide)').item.json.batch },\n  { replaceText: '__enrollment_number__', replaceWith: $('Variable Mapping (Bonafide)').item.json.enrollment_number },\n  { replaceText: '__student_name__', replaceWith: $('Variable Mapping (Bonafide)').item.json.student_name },\n  { replaceText: '__Course_name__', replaceWith: $('Variable Mapping (Bonafide)').item.json.course_name },\n  { replaceText: '__Semester_no__', replaceWith: $('Variable Mapping (Bonafide)').item.json.semester_no },\n  { replaceText: '__subject_name__', replaceWith: $('Variable Mapping (Bonafide)').item.json.subject_name },\n  { replaceText: '__teacher_name__', replaceWith: $('Variable Mapping (Bonafide)').item.json.teacher_name }\n];\n\nreturn [{\n  json: {\n    documentId: $('Duplicate Bonafide Template').item.json.id,\n    replacements: replacements,\n    documentName: $('Duplicate Bonafide Template').item.json.name,\n    documentLink: $('Duplicate Bonafide Template').item.json.webViewLink\n  }\n}];"
+      },
+      "id": "db36f3a2-aade-48bf-a2c8-b1f595a2e20d",
+      "name": "Format Bonafide Replacement Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "__Department_name__",
+              "replaceText": "{{ $json.replacements[0].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__Batch__",
+              "replaceText": "={{ $json.replacements[1].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__enrollment_number__",
+              "replaceText": "={{ $json.replacements[2].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__student_name__",
+              "replaceText": "={{ $json.replacements[3].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__Course_name__",
+              "replaceText": "={{ $json.replacements[4].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__Semester_no__",
+              "replaceText": "={{ $json.replacements[5].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__subject_name__",
+              "replaceText": "={{ $json.replacements[6].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__teacher_name__",
+              "replaceText": "={{ $json.replacements[7].replaceWith }}"
+            }
+          ]
+        }
+      },
+      "id": "4d4708c2-c725-4b00-98bc-467b3e4ad109",
+      "name": "Replace Bonafide Placeholders",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        992,
+        352
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.documentId }}"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "id": "3148a30c-15ca-4f35-9656-27997bd31882",
+      "name": "Download Bonafide PDF",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1216,
+        352
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $('Prepare Shared Document Variables (Both)').item.json;\n\nconst replacements = [\n  { replaceText: '__Department_name__', replaceWith: data.department_name || '' },\n  { replaceText: '__Batch__', replaceWith: data.batch || '' },\n  { replaceText: '__enrollment_number__', replaceWith: data.enrollment_number || '' },\n  { replaceText: '__student_name__', replaceWith: data.student_name || '' },\n  { replaceText: '__Course_name__', replaceWith: data.course_name || '' },\n  { replaceText: '__Semester_no__', replaceWith: data.semester_no || '' },\n  { replaceText: '__subject_name__', replaceWith: data.subject_name || '' },\n  { replaceText: '__teacher_name__', replaceWith: data.teacher_name || '' }\n];\n\nreturn [\n  {\n    json: {\n      documentId: $('Duplicate Bonafide Template (Both)').item.json.id,\n      replacements,\n      documentName: $('Duplicate Bonafide Template (Both)').item.json.name,\n      documentLink: $('Duplicate Bonafide Template (Both)').item.json.webViewLink\n    }\n  }\n];"
+      },
+      "id": "8501179a-0faa-4a7f-aeed-daa2918d9efe",
+      "name": "Format Bonafide Replacement (Both)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        928,
+        656
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "__Department_name__",
+              "replaceText": "={{ $json.replacements[0].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__Batch__",
+              "replaceText": "={{ $json.replacements[1].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__enrollment_number__",
+              "replaceText": "={{ $json.replacements[2].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__student_name__",
+              "replaceText": "={{ $json.replacements[3].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__Course_name__",
+              "replaceText": "={{ $json.replacements[4].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__Semester_no__",
+              "replaceText": "={{ $json.replacements[5].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__subject_name__",
+              "replaceText": "={{ $json.replacements[6].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[7].replaceText }}",
+              "replaceText": "={{ $json.replacements[7].replaceWith }}"
+            }
+          ]
+        }
+      },
+      "id": "0a586a45-026e-4eac-bfc1-100eeb56d776",
+      "name": "Replace Bonafide Placeholders (Both)",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1152,
+        656
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.documentId }}"
+        },
+        "options": {
+          "binaryPropertyName": "bonafide",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "id": "188d84d6-0a0b-4449-8c5d-761605ad86da",
+      "name": "Download Bonafide PDF (Both)",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1376,
+        656
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "YOUR_FRONTPAGE_TEMPLATE_ID",
+          "mode": "list",
+          "cachedResultName": "Assingment Front Page",
+          "cachedResultUrl": "https://docs.google.com/document/d/YOUR_FRONTPAGE_TEMPLATE_ID/edit?usp=drivesdk"
+        },
+        "name": "={{ 'FrontPage_' + $('Map Department to Course Name').item.json.studentName.replace(/\\s+/g, '_') + '_' + $('Map Department to Course Name').item.json.enrollmentNumber }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_DRIVE_FOLDER_ID",
+          "mode": "list",
+          "cachedResultName": "Sending Pages",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR_GOOGLE_DRIVE_FOLDER_ID"
+        },
+        "options": {}
+      },
+      "id": "5aa2c740-90ef-441f-b551-5d11dfbb8aa0",
+      "name": "Duplicate Front Page Template (Both)",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        704,
+        848
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Use ONE prepared source of truth\nconst data = $('Prepare Shared Document Variables (Both)').item.json;\n\nconst replacements = [\n  { replaceText: '__Department_name__', replaceWith: data.department_name || '' },\n  { replaceText: '__Assignment_topic__', replaceWith: data.assignment_topic || '' },\n  { replaceText: '__subject_name__', replaceWith: data.subject_name || '' },\n  { replaceText: '__course_name__', replaceWith: data.course_name || '' },\n  { replaceText: '__semester_no__', replaceWith: data.semester_no || '' },\n  { replaceText: '__student_name__', replaceWith: data.student_name || '' },\n  { replaceText: '__enrollment_number__', replaceWith: data.enrollment_number || '' },\n  { replaceText: '__teacher_name__', replaceWith: data.teacher_name || '' },\n  { replaceText: '__file_type__', replaceWith: data.__file_type__ || '' }\n];\n\nreturn [\n  {\n    json: {\n      documentId: $('Duplicate Front Page Template (Both)').item.json.id,\n      replacements,\n      documentName: $('Duplicate Front Page Template (Both)').item.json.name,\n      documentLink: $('Duplicate Front Page Template (Both)').item.json.webViewLink\n    }\n  }\n];"
+      },
+      "id": "7450c100-b168-4b27-a9d3-afc0ff9187fa",
+      "name": "Format Front Page Replacement (Both)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        928,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[0].replaceText }}",
+              "replaceText": "={{ $json.replacements[0].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[1].replaceText }}",
+              "replaceText": "={{ $json.replacements[1].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[2].replaceText }}",
+              "replaceText": "={{ $json.replacements[2].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[3].replaceText }}",
+              "replaceText": "={{ $json.replacements[3].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[4].replaceText }}",
+              "replaceText": "={{ $json.replacements[4].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[5].replaceText }}",
+              "replaceText": "={{ $json.replacements[5].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[6].replaceText }}",
+              "replaceText": "={{ $json.replacements[6].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[7].replaceText }}",
+              "replaceText": "={{ $json.replacements[7].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.replacements[8].replaceText }}",
+              "replaceText": "={{ $json.replacements[8].replaceWith }}"
+            }
+          ]
+        }
+      },
+      "id": "1f034efb-1f82-4889-94d3-e264f8d3fb39",
+      "name": "Replace Front Page Placeholders (Both)",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1152,
+        848
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.documentId }}"
+        },
+        "options": {
+          "binaryPropertyName": "frontpage",
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "id": "b8ee8aad-d534-4614-b130-b3b4e1393159",
+      "name": "Download Front Page PDF (Both)",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1376,
+        848
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "YOUR_FRONTPAGE_TEMPLATE_ID",
+          "mode": "list",
+          "cachedResultName": "Assingment Front Page",
+          "cachedResultUrl": "https://docs.google.com/document/d/YOUR_FRONTPAGE_TEMPLATE_ID/edit?usp=drivesdk"
+        },
+        "name": "={{ 'FrontPage_' + $('Map Department to Course Name').item.json.studentName.replace(/\\s+/g, '_') + '_' + $('Map Department to Course Name').item.json.enrollmentNumber }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_DRIVE_FOLDER_ID",
+          "mode": "list",
+          "cachedResultName": "Sending Pages",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/YOUR_GOOGLE_DRIVE_FOLDER_ID"
+        },
+        "options": {}
+      },
+      "id": "02166f74-039a-403e-a39c-fec0c9837a2f",
+      "name": "Duplicate Front Page Document",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        496,
+        64
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const replacements = [\n  { replaceText: '__Department_name__', replaceWith: $('Variable Mapping (Front)').item.json.department_name },\n  { replaceText: '__Assignment_topic__', replaceWith: $('Variable Mapping (Front)').item.json.assignment_topic },\n  { replaceText: '__subject_name__', replaceWith: $('Variable Mapping (Front)').item.json.subject_name },\n  { replaceText: '__course_name__', replaceWith: $('Variable Mapping (Front)').item.json.course_name },\n  { replaceText: '__semester_no__', replaceWith: $('Variable Mapping (Front)').item.json.semester_no },\n  { replaceText: '__student_name__', replaceWith: $('Variable Mapping (Front)').item.json.student_name },\n  { replaceText: '__enrollment_number__', replaceWith: $('Variable Mapping (Front)').item.json.enrollment_number },\n  { replaceText: '__teacher_name__', replaceWith: $('Variable Mapping (Front)').item.json.teacher_name },\n  {replaceText: '__file_type__', replaceWith: $('Variable Mapping (Front)').first().json.__file_type__.toUpperCase() }\n];\n\nreturn [{\n  json: {\n    documentId: $('Duplicate Front Page Document').item.json.id,\n    replacements: replacements,\n    documentName: $('Duplicate Front Page Document').item.json.name,\n    documentLink: $('Duplicate Front Page Document').item.json.webViewLink\n  }\n}];"
+      },
+      "id": "a952c3f1-701f-47d4-98a1-aabdc9be4a68",
+      "name": "Format Front page Replacement Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.documentId }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "__Department_name__",
+              "replaceText": "={{ $json.replacements[0].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__Assignment_topic__",
+              "replaceText": "={{ $json.replacements[1].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__subject_name__",
+              "replaceText": "={{ $json.replacements[2].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__course_name__",
+              "replaceText": "={{ $json.replacements[3].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__semester_no__",
+              "replaceText": "={{ $json.replacements[4].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__student_name__",
+              "replaceText": "={{ $json.replacements[5].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__enrollment_number__",
+              "replaceText": "={{ $json.replacements[6].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__teacher_name__",
+              "replaceText": "={{ $json.replacements[7].replaceWith }}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "__file_type__",
+              "replaceText": "={{ $json.replacements[8].replaceWith }}"
+            }
+          ]
+        }
+      },
+      "id": "b1f0dffa-61eb-45e9-ba88-c724a88876a9",
+      "name": "Replace Front page Placeholders",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        944,
+        64
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.documentId }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "application/pdf"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1168,
+        64
+      ],
+      "id": "80968948-b7e0-4eb5-9dd1-0b72a1bd6307",
+      "name": "Download Front Page",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "preferInput2"
+            }
+          },
+          "includeUnpaired": false
+        }
+      },
+      "id": "0c187806-f5d1-4127-8169-d12176ea43ef",
+      "name": "Combine Both PDFs",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1600,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "YOUR_WEBHOOK_ID",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "d2137117-4287-4463-b12f-5325df91f045",
+      "name": "Webhook Trigger - Student Document Request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -736,
+        352
+      ],
+      "webhookId": "YOUR_WEBHOOK_ID"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "documentType",
+              "value": "={{ $json.body.documentType }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "department",
+              "value": "={{ $json.body.department }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "studentName",
+              "value": "={{ $json.body.studentName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "enrollmentNumber",
+              "value": "={{ $json.body.enrollmentNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "subjectName",
+              "value": "={{ $json.body.subjectName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "semester",
+              "value": "={{ $json.body.semester }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "teacherName",
+              "value": "={{ $json.body.teacherName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "assignmentTopic",
+              "value": "={{ $json.body.assignmentTopic || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "id-10",
+              "name": "batch",
+              "value": "={{ $json.body.batch || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "id-11",
+              "name": "courseName",
+              "value": "={{\n  $json.body.department.includes('Engineering')\n    ? 'B.Tech CSE'\n    : $json.body.department.includes('Pharmacy')\n    ? 'B.Pharma'\n    : $json.body.department.includes('Information Technology')\n    ? 'BCA'\n    : $json.body.department.includes('Business')\n    ? 'BBA'\n    : $json.body.department.includes('Amity Institute of Biotechnology')\n    ? 'B.Tech Biotechnology'\n    : ''\n}}",
+              "type": "string"
+            },
+            {
+              "id": "4466ee02-853a-4970-9fcc-1c995ddd3fdd",
+              "name": "__file_type__",
+              "value": "={{ $json.body.__file_type__ }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "48c69a0b-25c4-4c47-a76c-cefafb7b439c",
+      "name": "Map Department to Course Name",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -512,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "3ca13590-5541-444b-abf2-eaafafeca991",
+      "name": "Respond - Front Page Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1840,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst emailNode = $('Send Front Page').item;\n\n\nif (emailNode.error) {\n  return [\n    {\n      json: {\n        success: false,\n        message: 'Failed to send the document email.',\n        error: emailNode.error.message || 'Unknown error occurred'\n      }\n    }\n  ];\n}\n\n\nreturn [\n  {\n    json: {\n      success: true,\n      message: 'Your document has been generated successfully and sent to your email.'\n    }\n  }\n];"
+      },
+      "id": "3da6c241-b475-4d2c-a1c4-b8210860e9fd",
+      "name": "Build Front Page Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        64
+      ],
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "23c6cbcf-b7a3-4a36-821b-f3f4f00f5fff",
+      "name": "Respond - Front Page Success1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1888,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook Trigger - Student Document Request').item.json.body.email }}",
+        "subject": "Your Page has been generated",
+        "message": "=Hey, {{ $('Webhook Trigger - Student Document Request').item.json.body.studentName }}\n\nYour Assignment Front page has been generated Successfully.",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1392,
+        64
+      ],
+      "id": "7919f7d0-2bc7-4c45-a811-2c8bf34431d8",
+      "name": "Send Front Page",
+      "webhookId": "8d78ea75-4898-473e-982e-3e444d2aeb53",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook Trigger - Student Document Request').item.json.body.email }}",
+        "subject": "Your Page has been generated",
+        "message": "=Hey, {{ $('Webhook Trigger - Student Document Request').item.json.body.studentName }}\n\nYour Bonafide page has been generated Successfully.",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        352
+      ],
+      "id": "19a371b9-8d79-48d3-8c28-5af0a8ea4441",
+      "name": "Send Bonafide",
+      "webhookId": "4ee0e995-00ce-497b-99d2-c057f7b2af43",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook Trigger - Student Document Request').item.json.body.email }}",
+        "subject": "Your Documents have been generated",
+        "message": "=Hey, {{ $('Webhook Trigger - Student Document Request').item.json.body.studentName }}\n\nYour Assignment Front page and Bonafide have been generated Successfully.",
+        "options": {
+          "appendAttribution": false,
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "frontpage"
+              },
+              {
+                "property": "bonafide"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1824,
+        752
+      ],
+      "id": "74053dac-f421-4aa1-99ba-fe18e6e333a8",
+      "name": "Send Both",
+      "webhookId": "f9a261a3-d53a-4f85-ab49-1c9bce7e0f64",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst emailNode = $('Send Front Page').item;\n\n\nif (emailNode.error) {\n  return [\n    {\n      json: {\n        success: false,\n        message: 'Failed to send the document email.',\n        error: emailNode.error.message || 'Unknown error occurred'\n      }\n    }\n  ];\n}\n\n\nreturn [\n  {\n    json: {\n      success: true,\n      message: 'Your document has been generated successfully and sent to your email.'\n    }\n  }\n];"
+      },
+      "id": "4489e618-309b-4d8f-ac72-39324c50eef5",
+      "name": "Build bonafide Page Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1664,
+        352
+      ],
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "let response = {\n  success: true,\n  message: 'Your document has been generated successfully and sent to your email.'\n};\n\n// Try to read error safely\nconst sendNode = $('Send Both');\n\nif (sendNode && sendNode.item && sendNode.item.error) {\n  response = {\n    success: false,\n    message: 'Failed to send the document email.',\n    error: sendNode.item.error.message || 'Unknown email error'\n  };\n}\n\nreturn [\n  {\n    json: response\n  }\n];"
+      },
+      "id": "cb6ca9e4-a733-4799-a097-1a68af34f83b",
+      "name": "Build bonafide Page Response1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2048,
+        752
+      ],
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "8e8ea181-d9ce-4dab-860e-df328aac13fb",
+      "name": "Respond - Front Page Success2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2272,
+        752
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Front Page Only\n",
+        "height": 240,
+        "width": 2128,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "2563c947-d0bb-4b2b-aa84-d82ca5c63bef",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Bonafide Only",
+        "height": 240,
+        "width": 2128,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        288
+      ],
+      "typeVersion": 1,
+      "id": "67b4dba0-fcf9-4950-ac80-321318a65815",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Both",
+        "height": 464,
+        "width": 2432,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -16,
+        592
+      ],
+      "typeVersion": 1,
+      "id": "b745362d-a4df-4218-9dae-f49d44352707",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Data Collection",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Department": "={{ $('Webhook Trigger - Student Document Request').item.json.body.department }}",
+            "Enrollment No.": "={{ $('Webhook Trigger - Student Document Request').item.json.body.email }}",
+            "Email": "={{ $('Webhook Trigger - Student Document Request').item.json.body.email }}",
+            "Course": "={{ $('Map Department to Course Name').item.json.courseName }}",
+            "Name": "={{ $('Webhook Trigger - Student Document Request').item.json.body.studentName }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Course",
+              "displayName": "Course",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Enrollment No.",
+              "displayName": "Enrollment No.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2752,
+        384
+      ],
+      "id": "10c03da8-3c76-439a-81ad-6fd6f905e912",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "department_name",
+              "value": "={{ $('Map Department to Course Name').item.json.department }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "assignment_topic",
+              "value": "={{ $('Map Department to Course Name').item.json.assignmentTopic }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "subject_name",
+              "value": "={{ $('Map Department to Course Name').item.json.subjectName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "course_name",
+              "value": "={{ $('Map Department to Course Name').item.json.courseName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "semester_no",
+              "value": "={{ $('Map Department to Course Name').item.json.semester }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "teacher_name",
+              "value": "={{ $('Map Department to Course Name').item.json.teacherName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "student_name",
+              "value": "={{ $('Map Department to Course Name').item.json.studentName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "enrollment_number",
+              "value": "={{ $('Map Department to Course Name').item.json.enrollmentNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "user_email",
+              "value": "={{ $('Map Department to Course Name').item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "d9afedb6-570a-4de2-a055-a5361af81bfb",
+              "name": "__file_type__",
+              "value": "={{ $json.__file_type__ }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ab76933b-ff2e-43f8-8301-b57b83ede865",
+      "name": "Prepare Variables (Front Page)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        48,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "department_name",
+              "value": "={{ $('Map Department to Course Name').item.json.department }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "batch",
+              "value": "={{ $('Map Department to Course Name').item.json.batch }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "subject_name",
+              "value": "={{ $('Map Department to Course Name').item.json.subjectName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "course_name",
+              "value": "={{ $('Map Department to Course Name').item.json.courseName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "semester_no",
+              "value": "={{ $('Map Department to Course Name').item.json.semester }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "teacher_name",
+              "value": "={{ $('Map Department to Course Name').item.json.teacherName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "student_name",
+              "value": "={{ $('Map Department to Course Name').item.json.studentName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "enrollment_number",
+              "value": "={{ $('Map Department to Course Name').item.json.enrollmentNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "user_email",
+              "value": "={{ $('Map Department to Course Name').item.json.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00e74a59-59f7-444f-b6f9-c7bd13be8757",
+      "name": "Prepare Variables (Bonafide)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "student_name",
+              "value": "={{ $json.student_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "enrollment_number",
+              "value": "={{ $json.enrollment_number }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "department_name",
+              "value": "={{ $json.department_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "assignment_topic",
+              "value": "={{ $json.assignment_topic }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "subject_name",
+              "value": "={{ $json.student_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "course_name",
+              "value": "={{ $json.course_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "semester_no",
+              "value": "={{ $json.semester_no }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "teacher_name",
+              "value": "={{ $json.teacher_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "user_email",
+              "value": "={{ $json.user_email }}",
+              "type": "string"
+            },
+            {
+              "id": "54201897-1ae9-4b23-9458-9ca180943546",
+              "name": "__file_type__",
+              "value": "={{ $json.__file_type__ }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e920b88c-cdf4-47b1-a83a-e627c5fcc264",
+      "name": "Prepare Variables (Front - Both)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        656
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "student_name",
+              "value": "={{ $json.student_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "enrollment_number",
+              "value": "={{ $json.enrollment_number }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "department_name",
+              "value": "={{ $json.department_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "assignment_topic",
+              "value": "={{ $json.assignment_topic }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "subject_name",
+              "value": "={{ $json.subject_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "course_name",
+              "value": "={{ $json.course_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "semester_no",
+              "value": "={{ $json.semester_no }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "teacher_name",
+              "value": "={{ $json.teacher_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "user_email",
+              "value": "={{ $json.user_email }}",
+              "type": "string"
+            },
+            {
+              "id": "54201897-1ae9-4b23-9458-9ca180943546",
+              "name": "__file_type__",
+              "value": "={{ $json.__file_type__ }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6d31ea12-4599-4f91-a823-0b1caaaee2bd",
+      "name": "Prepare Variables (Bonafide - Both)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        848
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "student_name",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.student_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "enrollment_number",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.enrollment_number }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "department_name",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.department_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "assignment_topic",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.assignment_topic }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "subject_name",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.subject_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "course_name",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.course_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "semester_no",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.semester_no }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "teacher_name",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.teacher_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "user_email",
+              "value": "={{ $('Prepare Variables (Front Page)').item.json.user_email }}",
+              "type": "string"
+            },
+            {
+              "id": "54201897-1ae9-4b23-9458-9ca180943546",
+              "name": "__file_type__",
+              "value": "={{ $json.__file_type__ }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "25d1f6ce-bb65-46d9-9a30-14f271c90909",
+      "name": "Variable Mapping (Front)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        272,
+        64
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "student_name",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.student_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "enrollment_number",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.enrollment_number }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "department_name",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.department_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "batch",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.batch }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "subject_name",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.subject_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "course_name",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.course_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "semester_no",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.semester_no }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "teacher_name",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.teacher_name }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "user_email",
+              "value": "={{ $('Prepare Variables (Bonafide)').item.json.user_email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fa4340cc-f7f1-487e-9820-53770d9b804a",
+      "name": "Variable Mapping (Bonafide)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "department_name",
+              "value": "={{ $('Map Department to Course Name').item.json.department }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "assignment_topic",
+              "value": "={{ $('Map Department to Course Name').item.json.assignmentTopic }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "batch",
+              "value": "={{ $('Map Department to Course Name').item.json.batch }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "subject_name",
+              "value": "={{ $('Map Department to Course Name').item.json.subjectName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "course_name",
+              "value": "={{ $('Map Department to Course Name').item.json.courseName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "semester_no",
+              "value": "={{ $('Map Department to Course Name').item.json.semester }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "teacher_name",
+              "value": "={{ $('Map Department to Course Name').item.json.teacherName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "student_name",
+              "value": "={{ $('Map Department to Course Name').item.json.studentName }}",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "enrollment_number",
+              "value": "={{ $('Map Department to Course Name').item.json.enrollmentNumber }}",
+              "type": "string"
+            },
+            {
+              "id": "id-10",
+              "name": "user_email",
+              "value": "={{ $('Map Department to Course Name').item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "3ba58410-b960-4201-a55a-1bab96142130",
+              "name": "=__file_type__",
+              "value": "={{ $json.__file_type__ }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "24967482-ccc6-4881-b322-5df750cf7c16",
+      "name": "Prepare Shared Document Variables (Both)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        768
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Duplicate Bonafide Template": {
+      "main": [
+        [
+          {
+            "node": "Format Bonafide Replacement Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Selection": {
+      "main": [
+        [
+          {
+            "node": "Prepare Variables (Front Page)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Variables (Bonafide)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prepare Shared Document Variables (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Bonafide Replacement Data": {
+      "main": [
+        [
+          {
+            "node": "Replace Bonafide Placeholders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Bonafide Placeholders": {
+      "main": [
+        [
+          {
+            "node": "Download Bonafide PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Bonafide PDF": {
+      "main": [
+        [
+          {
+            "node": "Send Bonafide",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Duplicate Front Page Template (Both)": {
+      "main": [
+        [
+          {
+            "node": "Format Front Page Replacement (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Front Page Replacement (Both)": {
+      "main": [
+        [
+          {
+            "node": "Replace Front Page Placeholders (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Front Page Placeholders (Both)": {
+      "main": [
+        [
+          {
+            "node": "Download Front Page PDF (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Duplicate Bonafide Template (Both)": {
+      "main": [
+        [
+          {
+            "node": "Format Bonafide Replacement (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Bonafide Replacement (Both)": {
+      "main": [
+        [
+          {
+            "node": "Replace Bonafide Placeholders (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Bonafide Placeholders (Both)": {
+      "main": [
+        [
+          {
+            "node": "Download Bonafide PDF (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Front Page PDF (Both)": {
+      "main": [
+        [
+          {
+            "node": "Combine Both PDFs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Bonafide PDF (Both)": {
+      "main": [
+        [
+          {
+            "node": "Combine Both PDFs",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Duplicate Front Page Document": {
+      "main": [
+        [
+          {
+            "node": "Format Front page Replacement Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Front page Replacement Data": {
+      "main": [
+        [
+          {
+            "node": "Replace Front page Placeholders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Front page Placeholders": {
+      "main": [
+        [
+          {
+            "node": "Download Front Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Front Page": {
+      "main": [
+        [
+          {
+            "node": "Send Front Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Both PDFs": {
+      "main": [
+        [
+          {
+            "node": "Send Both",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger - Student Document Request": {
+      "main": [
+        [
+          {
+            "node": "Map Department to Course Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Department to Course Name": {
+      "main": [
+        [
+          {
+            "node": "Route by Selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Front Page Response": {
+      "main": [
+        [
+          {
+            "node": "Respond - Front Page Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Front Page": {
+      "main": [
+        [
+          {
+            "node": "Build Front Page Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Bonafide": {
+      "main": [
+        [
+          {
+            "node": "Build bonafide Page Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Both": {
+      "main": [
+        [
+          {
+            "node": "Build bonafide Page Response1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build bonafide Page Response": {
+      "main": [
+        [
+          {
+            "node": "Respond - Front Page Success1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build bonafide Page Response1": {
+      "main": [
+        [
+          {
+            "node": "Respond - Front Page Success2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond - Front Page Success": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond - Front Page Success1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond - Front Page Success2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Variables (Front Page)": {
+      "main": [
+        [
+          {
+            "node": "Variable Mapping (Front)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Variables (Bonafide)": {
+      "main": [
+        [
+          {
+            "node": "Variable Mapping (Bonafide)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Variables (Front - Both)": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Bonafide Template (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Variables (Bonafide - Both)": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Front Page Template (Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Variable Mapping (Front)": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Front Page Document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Variable Mapping (Bonafide)": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Bonafide Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Shared Document Variables (Both)": {
+      "main": [
+        [
+          {
+            "node": "Prepare Variables (Bonafide - Both)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Prepare Variables (Front - Both)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "14ac33ab-2aed-4966-b28b-a1188738d639",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "467be0aaf973d76746e412d3e835dc9eb91ee4ddea261e61de13b01cf9b2d7e5"
+  },
+  "id": "XX4D-rm6B6MaCf_isJakh",
+  "tags": []
+}

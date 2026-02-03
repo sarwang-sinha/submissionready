@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Front Page Generator | Amity University</title>
+    <meta name="description"
+        content="Generate professional Amity University assignment front pages and bona fide certificates instantly. No formatting stress, submission-ready PDF downloads.">
+    <meta name="keywords"
+        content="Amity University, Assignment Front Page, Bonafide Certificate Generator, Amity Assignment, Front Page Maker, Amity Tools">
+    <meta name="author" content="Sarwang Sinha">
+
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="tab-generate">Generate Document</button>
+            <button class="tab-btn" data-tab="tab-templates">View Templates</button>
+            <a class="github-button" href="https://github.com/sarwang-sinha/submissionready"
+                data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star"
+                data-size="large" data-show-count="true"
+                aria-label="Star sarwang-sinha/submissionready on GitHub">Star</a>
+        </nav>
+
+        <section id="tab-generate" class="tab-content active">
+            <div class="morphism-card">
+                <header class="header">
+                    <h1>Amity Assignment front page & Bonafide Generator</h1>
+                    <p>Turn your details into submission ready documents instantly, without formatting headaches.</p>
+                </header>
+
+                <form id="assignmentForm" autocomplete="off">
+                    <div class="form-group document-type-group">
+                        <label class="group-label">Select Document Type</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="documentType" value="Front Page" checked>
+                                <span class="radio-label">Assignment Front Page</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="documentType" value="Bona Fide">
+                                <span class="radio-label">Bona Fide Certificate</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="documentType" value="Both">
+                                <span class="radio-label">Both</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <h3 class="form-section-title">Fill the required details to generate your page</h3>
+
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <div class="select-wrapper">
+                            <select id="department" name="department" required>
+                                <option value="" disabled selected>Select Department</option>
+                                <option value="Amity School of Engineering And Technology">Amity School of Engineering
+                                    And Technology</option>
+                                <option value="Amity Institute of Pharmacy">Amity Institute of Pharmacy</option>
+                                <option value="Amity Institute of Information and Technology">Amity Institute of
+                                    Information and Technology</option>
+                                <option value="Amity Institute of Biotechnology">Amity Institute of Biotechnology
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="studentName">Student Name</label>
+                            <input type="text" id="studentName" name="studentName" placeholder="e.g. Aditi Sharma"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enrollmentNumber">Enrollment Number</label>
+                            <input type="text" id="enrollmentNumber" name="enrollmentNumber"
+                                placeholder="e.g. A2305219001" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group dynamic-field collapsed" id="group-batch">
+                        <label for="batch">Batch</label>
+                        <input type="text" id="batch" name="batch" placeholder="e.g. 2023-2027">
+                    </div>
+
+                    <div class="form-group dynamic-field" id="group-submission-type">
+                        <label for="submissionType">Submission Type</label>
+                        <input type="text" id="submissionType" name="submissionType"
+                            placeholder="e.g. Assignment, Project, Research Paper" required>
+                    </div>
+
+                    <div class="form-group dynamic-field" id="group-topic">
+                        <label for="assignmentTopic">Assignment Topic</label>
+                        <input type="text" id="assignmentTopic" name="assignmentTopic"
+                            placeholder="e.g. Analysis of Algorithms" required>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="subjectName">Subject Name</label>
+                            <input type="text" id="subjectName" name="subjectName" placeholder="e.g. Data Structures"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="semester">Semester</label>
+                            <input type="text" id="semester" name="semester" placeholder="e.g. 3rd"
+                                style="display: none;">
+                            <div class="select-wrapper" id="semesterSelectWrapper">
+                                <select id="semesterSelect" name="semesterSelect" disabled>
+                                    <option value="" disabled selected>Select Department First</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="teacherName">Teacher Name</label>
+                            <input type="text" id="teacherName" name="teacherName" placeholder="e.g. Dr. R. K. Gupta"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="yourname@gmail.com" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        <span class="btn-text">Generate Document</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="tab-templates" class="tab-content">
+            <div class="templates-header">
+                <h2>Available Templates</h2>
+                <p>Preview the official formats generated by this tool.</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-card">
+                        <img src="assets/templates/Front Page.png" alt="Front Page Template" class="gallery-image">
+                    </div>
+                    <span class="gallery-label">Assignment Front Page</span>
+                </div>
+
+                <div class="gallery-item">
+                    <div class="gallery-card">
+                        <img src="assets/templates/Bonafide.jpg" alt="Bona Fide Template" class="gallery-image">
+                    </div>
+                    <span class="gallery-label">Bona Fide Certificate</span>
+                </div>
+            </div>
+
+            <footer class="templates-footer">
+                <p>Need a different template? <a
+                        href="mailto:sarwang.dev@gmail.com?subject=New Template Request">Request here</a>.</p>
+            </footer>
+        </section>
+
+    </div>
+
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
